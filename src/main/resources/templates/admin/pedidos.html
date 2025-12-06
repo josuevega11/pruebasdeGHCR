@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos Personalizados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FEF5E4;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenido-principal {
+            margin-left: 220px;
+            padding: 30px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+        }
+
+        .contenido-principal h2 {
+            color: #941528;
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        .tabla-pedidos {
+            width: 100%;
+            background-color: white;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabla-pedidos thead {
+            background-color: #D6B7B7;
+            color: #000000;
+        }
+
+        .tabla-pedidos th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tabla-pedidos td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .tabla-pedidos tbody tr:hover {
+            background-color: #ffc3c3;
+        }
+
+        .tabla-pedidos tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge-estado {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-pendiente {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .badge-aceptado {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-rechazado {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .form-accion {
+            display: inline;
+            margin-right: 8px;
+        }
+
+        .btn-aceptar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 13px;
+        }
+
+        .btn-aceptar:hover:not(:disabled) {
+            background-color: #218838;
+        }
+
+        .btn-rechazar {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 13px;
+        }
+
+        .btn-rechazar:hover:not(:disabled) {
+            background-color: #c82333;
+        }
+
+        .btn-aceptar:disabled,
+        .btn-rechazar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .mensaje-procesado {
+            display: inline-block;
+            color: #666;
+            font-style: italic;
+            font-size: 13px;
+            margin-left: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Incluye menú vertical -->
+<div th:replace="~{admin/fragments :: menuVertical}"></div>
+
+<div class="contenido-principal">
+    <h2>Pedidos Personalizados</h2>
+    
+    <!-- Tabla de pedidos -->
+    <table class="tabla-pedidos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pedido : ${pedidos}">
+                <td th:text="${pedido.id}">1</td>
+                <td th:text="${pedido.usuario.username}">user1</td>
+                <td th:text="${pedido.descripcionPersonalizacion}">Pedido especial</td>
+                <td>
+                    <span th:class="${pedido.estado.name() == 'PENDIENTE' ? 'badge-estado badge-pendiente' : 
+                                     (pedido.estado.name() == 'ACEPTADO' ? 'badge-estado badge-aceptado' : 
+                                     'badge-estado badge-rechazado')}" 
+                          th:text="${pedido.estado}">PENDIENTE</span>
+                </td>
+                <td>
+                    <!-- Botones de acción -->
+                    <form th:action="@{'/admin/pedidos/aceptar/' + ${pedido.id}}" method="post" class="form-accion">
+                        <button type="submit" 
+                                class="btn-aceptar"
+                                th:disabled="${pedido.estado != T(com.UTP.PasteleriaAurora.model.PedidoPersonalizado.Estado).PENDIENTE}">
+                            Aceptar
+                        </button>
+                    </form>
+                    
+                    <form th:action="@{'/admin/pedidos/rechazar/' + ${pedido.id}}" method="post" class="form-accion">
+                        <button type="submit" 
+                                class="btn-rechazar"
+                                th:disabled="${pedido.estado != T(com.UTP.PasteleriaAurora.model.PedidoPersonalizado.Estado).PENDIENTE}">
+                            Rechazar
+                        </button>
+                    </form>
+                    
+                    <!-- Mensaje para pedidos ya procesados -->
+                    <span class="mensaje-procesado"
+                          th:if="${pedido.estado != T(com.UTP.PasteleriaAurora.model.PedidoPersonalizado.Estado).PENDIENTE}"
+                          th:text="'Ya fue ' + ${#strings.toLowerCase(pedido.estado)}">
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Incluye footer -->
+<div th:replace="~{admin/fragments :: footer}"></div>
+
+</body>
+</html>

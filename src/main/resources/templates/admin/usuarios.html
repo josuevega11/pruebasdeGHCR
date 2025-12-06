@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios Registrados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FEF5E4;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenido-principal {
+            margin-left: 220px;
+            padding: 30px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+        }
+
+        .contenido-principal h2 {
+            color: #941528;
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .tabla-usuarios {
+            width: 100%;
+            background-color: white;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabla-usuarios thead {
+            background-color: #D6B7B7;
+            color: #000000;
+        }
+
+        .tabla-usuarios th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tabla-usuarios td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .tabla-usuarios tbody tr:hover {
+            background-color: #ffc3c3;
+        }
+
+        .tabla-usuarios tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge-rol {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-admin {
+            background-color: #941528;
+            color: white;
+        }
+
+        .badge-usuario {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Incluye menú vertical -->
+<div th:replace="~{admin/fragments :: menuVertical}"></div>
+
+<div class="contenido-principal">
+    <h2>Usuarios Registrados</h2>
+    
+    <!-- Tabla de usuarios -->
+    <table class="tabla-usuarios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Nombre Completo</th>
+                <th>Email</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usr : ${usuarios}">
+                <td th:text="${usr.id}"></td>
+                <td th:text="${usr.username}"></td>
+                <td th:text="${usr.nombreCompleto}"></td>
+                <td th:text="${usr.email}"></td>
+                <td>
+                    <span th:class="${usr.rol == 'ADMIN' ? 'badge-rol badge-admin' : 'badge-rol badge-usuario'}" 
+                          th:text="${usr.rol}"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Incluye footer -->
+<div th:replace="~{admin/fragments :: footer}"></div>
+
+</body>
+</html>

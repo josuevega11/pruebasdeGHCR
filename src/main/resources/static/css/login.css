@@ -1,0 +1,143 @@
+/* Fondo general */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #fffaf7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Contenedor principal */
+.login-container {
+  display: flex;
+  width: 900px;
+  height: 550px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Lado izquierdo con imagen */
+.login-left {
+  flex: 1;
+  background-image: url('img/banner-1.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.login-left .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(61, 28, 12, 0.6);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.login-left h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.login-left p {
+  font-size: 18px;
+}
+
+/* Lado derecho (formulario) */
+.login-right {
+  flex: 1;
+  background-image: url('img/img-login.jpg');
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.login-right h2 {
+  margin-bottom: 25px;
+  color: #5a372c;
+  font-size: 26px;
+}
+
+/* Formulario */
+.input-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  color: #5a372c;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1bfa7;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #a6754b;
+}
+
+/* Botón */
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  background-color: #a6754b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #8b5e3c;
+}
+
+/* Enlaces extra */
+.extra-links {
+  margin-top: 15px;
+}
+
+.extra-links a {
+  color: #6b4226;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.extra-links a:hover {
+  text-decoration: underline;
+}
+
+/* Logo inferior */
+.logo-bottom {
+  margin-top: 30px;
+}
+
+.logo-img {
+  width: 120px;
+  opacity: 0.85;
+}

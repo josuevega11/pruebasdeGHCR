@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio | Pastelería Aurora</title>
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
+    <link rel="stylesheet" th:href="@{/css/inicio.css}">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div th:replace="usuario/fragments :: navbar"></div>
+
+    <!-- Notificaciones -->
+    <div th:if="${notificaciones != null}">
+        <div th:each="noti : ${notificaciones}">
+            <div th:id="'modalNoti' + ${noti.id}" class="modal"
+                 style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5);">
+                <div style="background:white; margin:10% auto; padding:20px; width:300px; text-align:center;">
+                    <p th:text="${noti.mensaje}"></p>
+                    <button th:onclick="'cerrarNotificacion(' + ${noti.id} + ')'">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección 1: Portada -->
+    <section class="hero" th:style="'background-image: url(' + @{/img/banner-1.jpg} + ');'">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <img th:src="@{/img/img-1.png}" alt="Pastel decorativo" class="hero-image">
+                <div>
+                    <h1>"Endulzamos tus momentos especiales con amor y sabor"</h1>
+                    <a th:href="@{/catalogo}" class="btn">Haz tu pedido</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 2: Categorías -->
+    <section class="categorias">
+        <h2>¿Qué estás buscando? Tortas...</h2>
+        <div class="categoria-lista">
+            <div class="categoria">
+                <img th:src="@{/img/boda-2.png}" alt="Tortas para bodas">
+                <h3>Para Bodas</h3>
+            </div>
+            <div class="categoria">
+                <img th:src="@{/img/cumple-2.webp}" alt="Tortas para cumpleaños">
+                <h3>Para Cumpleaños</h3>
+            </div>
+            <div class="categoria">
+                <img th:src="@{/img/aniversario-2.png}" alt="Tortas para aniversarios">
+                <h3>Para Aniversarios</h3>
+            </div>
+            <div class="categoria">
+                <img th:src="@{/img/postre-2.webp}" alt="Postres especiales">
+                <h3>Postres Especiales</h3>
+            </div>
+            <div class="categoria">
+                <img th:src="@{/img/infantil-2.png}" alt="Tortas infantiles">
+                <h3>Infantiles</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 3: Descripción -->
+    <section class="about">
+        <div class="about-content">
+            <img th:src="@{/img/img-3.png}" alt="Arte de pastelería">
+            <div class="about-text">
+                <h2>Cakes, el arte de endulzar tus momentos</h2>
+                <p>
+                    En Cakes cada creación es más que un postre: es una experiencia hecha con dedicación y los mejores
+                    ingredientes. Ofrecemos tortas, postres y dulces que convierten cualquier ocasión en un recuerdo inolvidable.
+                    Porque un buen sabor siempre se comparte, ven y descubre la magia de Cakes.
+                </p>
+                <a th:href="@{/nosotros}" class="btn">Conoce más de nosotros</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 4: Crea tu pastel -->
+    <section class="crea-pastel" th:style="'background-image: url(' + @{/img/fondo-4.jpeg} + ');'">
+        <div class="crea-overlay"></div>
+        <div class="crea-content">
+            <h2>Crea tu pastel soñado, aquí en Cakes</h2>
+            <p>
+                Haz de tu celebración algo único creando un pastel a tu medida.
+                Elige el sabor, el relleno, el diseño y los detalles especiales.
+            </p>
+            <a th:href="@{/personalizado}" class="btn">Crea tu pastel</a>
+        </div>
+    </section>
+
+    <!-- Sección 5: Contacto -->
+    <section class="contacto">
+        <h2>Contáctanos</h2>
+        <p>En Cakes estamos listos para atenderte.</p>
+        <div class="contacto-contenido">
+            <form class="contacto-form" th:action="@{/contacto}" method="post">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario" placeholder="Tu nombre" required>
+
+                <label for="correo">Correo</label>
+                <input type="email" id="correo" name="correo" placeholder="tuemail@ejemplo.com" required>
+
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
+                <button type="submit" class="btn">Enviar</button>
+            </form>
+
+            <div class="contacto-mapa">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.931030833502!2d-77.00594652488773!3d-12.11112314536354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c7f0161c5c4f%3A0x95d3f9f366fa2739!2sAv.%20Aviaci%C3%B3n%204945%2C%20Santiago%20de%20Surco%2015038!5e0!3m2!1ses!2spe!4v1693000000000!5m2!1ses!2spe"
+                    width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div th:replace="usuario/fragments :: footer"></div>
+
+    <script>
+        function cerrarNotificacion(id) {
+            fetch('/notificacion/' + id + '/leer', { method: 'POST' })
+                .then(() => document.getElementById('modalNoti' + id).style.display = 'none');
+        }
+    </script>
+</body>
+</html>

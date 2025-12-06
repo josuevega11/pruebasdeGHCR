@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
+    <link rel="stylesheet" th:href="@{/css/carrito.css}">
+</head>
+<body>
+    <div th:replace="~{usuario/fragments :: navbar}"></div>
+    
+    <div class="carrito-container">
+        <h1>🛒 Carrito de Compras - Pastelería Aurora</h1>
+        
+        <div th:if="${#lists.isEmpty(items)}" class="carrito-vacio">
+            <div class="carrito-vacio-icono">🛒</div>
+            <p class="carrito-vacio-texto">Tu carrito está vacío</p>
+            <a th:href="@{/catalogo}" class="btn-volver-catalogo">Ver Catálogo</a>
+        </div>
+        
+        <div th:unless="${#lists.isEmpty(items)}">
+            <ul class="carrito-items">
+                <li th:each="item : ${items}" class="carrito-item">
+                    <div class="item-info">
+                        <span class="item-nombre" th:text="${item.producto.nombre}">Nombre</span>
+                        <span class="item-precio">
+                            S/ <span th:text="${item.producto.precio}">0.00</span>
+                        </span>
+                        <span class="item-cantidad">
+                            x <span class="item-cantidad-numero" th:text="${item.cantidad}">1</span>
+                        </span>
+                    </div>
+                    <form th:action="@{/carrito/quitar/{id}(id=${item.id})}" method="post" class="form-quitar">
+                        <button type="submit" class="btn-quitar">🗑️ Quitar</button>
+                    </form>
+                </li>
+            </ul>
+            
+            <div class="carrito-acciones">
+                <form th:action="@{/carrito/comprar}" method="post" class="form-comprar">
+                    <button type="submit" class="btn-comprar">💳 Finalizar Compra</button>
+                </form>
+            </div>
+        </div>
+        
+        <div th:if="${mensaje}" class="mensaje-exito">
+            <span th:text="${mensaje}">Mensaje</span>
+        </div>
+    </div>
+
+    <div th:replace="~{usuario/fragments :: footer}"></div>
+</body>
+</html>

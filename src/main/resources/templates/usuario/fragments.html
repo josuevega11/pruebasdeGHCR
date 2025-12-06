@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Fragments</title>
+</head>
+<body>
+
+<!-- 🧁 Fragmento Navbar -->
+<div th:fragment="navbar">
+  <nav class="navbar">
+    <!-- Logo -->
+    <div class="navbar-logo">
+      <a th:href="@{/inicio}">
+        <img src="/img/logo-pasteleria.png" alt="Logo Pastelería">
+      </a>
+    </div>
+
+    <!-- Enlaces -->
+    <ul class="navbar-links">
+      <li><a th:href="@{/inicio}">Inicio</a></li>
+      <li><a th:href="@{/catalogo}">Catálogo</a></li>
+      <li><a th:href="@{/personalizado}">Crea tu pastel</a></li>
+      <li><a th:href="@{/nosotros}">Nosotros</a></li>
+      <li><a th:href="@{/contacto}">Contacto</a></li>
+    </ul>
+
+    <!-- Íconos + Cerrar sesión -->
+    <div class="navbar-icons">
+      <a th:href="@{/carrito}"><img src="/img/logo-carrito.png" alt="Carrito"></a>
+      <a th:href="@{/logout}" class="logout-link">Cerrar Sesión</a>
+    </div>
+  </nav>
+</div>
+
+
+<!-- 🎂 Fragmento Footer -->
+<div th:fragment="footer">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Sección 1: Logo y redes sociales -->
+      <div class="footer-logo">
+        <img src="/img/logo-pasteleria.png" alt="Logo Pastelería Aurora">
+        <div class="footer-redes">
+          <a href="#"><img src="/img/facebook.png" alt="Facebook"></a>
+          <a href="#"><img src="/img/instagram.png" alt="Instagram"></a>
+          <a href="#"><img src="/img/whatsapp.png" alt="WhatsApp"></a>
+        </div>
+      </div>
+
+      <!-- Sección 2: Contacto -->
+      <div class="footer-contacto">
+        <h3>Contacto</h3>
+        <p>Av. Aviación 4945, Santiago de Surco 15038</p>
+        <p>Lunes a Sábado. 9:00 am a 6:00 pm</p>
+        <p>(01) 6287515 - 958 967 721</p>
+      </div>
+
+      <!-- Sección 3: Ayuda y soporte -->
+      <div class="footer-ayuda">
+        <h3>Ayuda y Soporte</h3>
+        <ul>
+          <li><a href="#">Preguntas Frecuentes (FAQ)</a></li>
+          <li><a href="#">Términos y Condiciones</a></li>
+          <li><a href="#">Opiniones y Comentarios</a></li>
+        </ul>
+      </div>
+
+      <!-- Sección 4: Libro de reclamaciones y métodos de pago -->
+      <div class="footer-extra">
+        <div class="footer-reclamaciones">
+          <img src="/img/logo-libroreclamaciones.png" alt="Libro de Reclamaciones">
+        </div>
+        <div class="footer-pagos">
+          <h4>Métodos de pago</h4>
+          <div>
+            <img src="/img/visa.png" alt="Visa">
+            <img src="/img/mastercard.png" alt="Mastercard">
+            <img src="/img/yape.webp" alt="Yape">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Derechos -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 Pastelería Aurora. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>

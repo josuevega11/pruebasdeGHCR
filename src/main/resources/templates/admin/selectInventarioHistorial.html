@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Inventario para Historial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FEF5E4;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenido-principal {
+            margin-left: 220px;
+            padding: 30px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contenido-principal h2 {
+            color: #941528;
+            font-size: 30px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .form-selector {
+            background-color: white;
+            border: 2px solid #941528;
+            border-radius: 10px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .form-selector select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #333;
+            background-color: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            margin-bottom: 25px;
+        }
+
+        .form-selector select:focus {
+            outline: none;
+            border-color: #941528;
+            box-shadow: 0 0 0 3px rgba(148, 21, 40, 0.1);
+        }
+
+        .form-selector select option {
+            padding: 10px;
+        }
+
+        .form-selector select option:disabled {
+            color: #999;
+        }
+
+        .form-selector button[type="submit"] {
+            width: 100%;
+            background-color: #941528;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-selector button[type="submit"]:hover {
+            background-color: #b12e40;
+        }
+
+        .icono-selector {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{admin/fragments :: menuVertical}"></div>
+
+<div class="contenido-principal">
+    <h2>Seleccione Inventario para Ver Historial</h2>
+
+    <form th:action="@{/admin/inventario/historial}" method="post" class="form-selector">
+        <div class="icono-selector">📊</div>
+        
+        <select name="inventarioId" required>
+            <option value="" disabled selected>-- Seleccione un inventario --</option>
+            <option th:each="inv : ${inventarios}" th:value="${inv.id}" th:text="${inv.producto.nombre}"></option>
+        </select>
+        
+        <button type="submit">Ver Historial</button>
+    </form>
+</div>
+
+<div th:replace="~{admin/fragments :: footer}"></div>
+
+</body>
+</html>

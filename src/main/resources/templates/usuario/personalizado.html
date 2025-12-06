@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedido Personalizado</title>
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
+    <link rel="stylesheet" th:href="@{/css/personalizado.css}">
+</head>
+<body>
+    <div th:replace="~{usuario/fragments :: navbar}"></div>
+    
+    <div class="pedido-container">
+        <h1>Formulario de Pedido Personalizado</h1>
+        
+        <form th:action="@{/personalizado}" th:object="${pedidoPersonalizado}" method="post" class="form-pedido">
+            <div class="icono-decorativo">🎂</div>
+            
+            <label for="descripcion">Describe cómo quieres tu pastel:</label>
+            <textarea 
+                id="descripcion"
+                th:field="*{descripcionPersonalizacion}" 
+                rows="8" 
+                placeholder="Ejemplo: Quiero un pastel de chocolate de 3 pisos con decoración de rosas rojas y un mensaje que diga 'Feliz Cumpleaños'..."
+                required>
+            </textarea>
+            
+            <button type="submit" class="btn-enviar">📝 Enviar Pedido</button>
+        </form>
+    </div>
+    
+    <div th:replace="~{usuario/fragments :: footer}"></div>
+</body>
+</html>

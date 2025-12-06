@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros | Pastelería Aurora</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" th:href="@{/css/fragments.css}">
+  <link rel="stylesheet" th:href="@{/css/nosotros.css}">
+</head>
+
+<body style="background-color: #FEF5E4;">
+  <!-- Navbar -->
+  <div th:replace="usuario/fragments :: navbar"></div>
+
+  <main>
+    <!-- Sección 1: Sobre Pastelería Aurora -->
+    <section class="sobre-cakes">
+      <div class="contenido">
+        <h2>Sobre Pastelería Aurora</h2>
+        <div class="sobre-flex">
+          <div class="sobre-img">
+            <img th:src="@{/img/img-nosotros.jpg}" alt="Pastelera decorando cupcakes">
+          </div>
+          <div class="sobre-texto">
+            <p>
+              En <strong>Pastelería Aurora</strong> creemos que cada momento especial merece un dulce único.
+              Somos una pastelería dedicada a crear pasteles, postres y bocados que no solo deleitan
+              al paladar, sino que también cuentan una historia.
+            </p>
+            <p>
+              Nuestro compromiso es transformar tus ideas en creaciones dulces, con diseños personalizados
+              que reflejen tu estilo y tu celebración. Desde un cumpleaños íntimo hasta un evento grande,
+              ponemos todo nuestro cariño en cada detalle para que tu pastel sea tan especial como el momento que acompañará.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección 2: Misión y Visión -->
+    <section class="mision-vision">
+      <div class="mision">
+        <img th:src="@{/img/mision-nosotros.png}" alt="Icono de misión" class="icono">
+        <h3>MISIÓN</h3>
+        <p>Endulzar cada momento especial con pasteles y postres únicos, hechos con calidad, creatividad y pasión.</p>
+      </div>
+
+      <div class="vision">
+        <img th:src="@{/img/vision-nosotros.png}" alt="Icono de visión" class="icono">
+        <h3>VISIÓN</h3>
+        <p>Ser la pastelería favorita por nuestros diseños personalizados y sabor inigualable.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <div th:replace="usuario/fragments :: footer"></div>
+</body>
+</html>

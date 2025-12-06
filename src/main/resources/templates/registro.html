@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(148, 21, 40, 0.75);
+            z-index: -1;
+        }
+
+        .registro-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 450px;       /* un poco más ancho */
+            max-height: 90vh;   /* para que no ocupe todo el alto */
+            overflow-y: auto;   /* scroll si se pasa de alto */
+            backdrop-filter: blur(10px);
+            margin: 40px 0;     /* espacio arriba y abajo */
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background-color: #941528;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            box-shadow: 0 4px 10px rgba(148, 21, 40, 0.3);
+        }
+
+        h1 {
+            color: #941528;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #941528;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #941528;
+            box-shadow: 0 0 0 3px rgba(148, 21, 40, 0.1);
+        }
+
+        .btn-registrar {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background-color: #941528;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-registrar:hover {
+            background-color: #b12e40;
+        }
+
+        .btn-registrar:active {
+            transform: scale(0.98);
+        }
+
+        .divider {
+            margin: 25px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider span {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 0 15px;
+            color: #666;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .link-login {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 30px;
+            color: #941528;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid #941528;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .link-login:hover {
+            background-color: #941528;
+            color: white;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="registro-container">
+        <div class="logo">🎂</div>
+        <h1>Registro</h1>
+        <p class="subtitle">Pastelería Aurora</p>
+
+        <div th:if="${param.error}" class="error-message">
+            ❌ Ocurrió un error en el registro
+        </div>
+
+        <form th:action="@{/registro}" th:object="${usuario}" method="post">
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" th:field="*{username}" placeholder="Ingresa tu usuario" required />
+            </div>
+            <div class="form-group">
+                <label>Nombre Completo</label>
+                <input type="text" th:field="*{nombreCompleto}" placeholder="Ingresa tu nombre completo" required />
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" placeholder="Ingresa tu email" required />
+            </div>
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="text" th:field="*{telefono}" placeholder="Ingresa tu teléfono" required />
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" th:field="*{password}" placeholder="Ingresa tu contraseña" required />
+            </div>
+            <button type="submit" class="btn-registrar">📝 Registrar</button>
+        </form>
+
+        <div class="divider">
+            <span>¿Ya tienes cuenta?</span>
+        </div>
+
+        <a th:href="@{/login}" class="link-login">Iniciar Sesión</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Inventario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FEF5E4;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenido-principal {
+            margin-left: 220px;
+            padding: 30px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+        }
+
+        .contenido-principal h2 {
+            color: #941528;
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .contenido-principal h2 span {
+            color: #b12e40;
+            font-weight: 700;
+        }
+
+        .tabla-historial {
+            width: 100%;
+            background-color: white;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabla-historial thead {
+            background-color: #D6B7B7;
+            color: #000000;
+        }
+
+        .tabla-historial th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tabla-historial td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .tabla-historial tbody tr:hover {
+            background-color: #ffc3c3;
+        }
+
+        .tabla-historial tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .sin-registros {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+            font-size: 16px;
+        }
+
+        .link-volver {
+            display: inline-block;
+            margin-top: 25px;
+            color: #941528;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 20px;
+            border: 2px solid #941528;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .link-volver:hover {
+            background-color: #941528;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{admin/fragments :: menuVertical}"></div>
+
+<div class="contenido-principal">
+    <h2>Historial de Cambios para Inventario Id: <span th:text="${inventarioId}"></span></h2>
+
+    <table class="tabla-historial">
+        <thead>
+            <tr>
+                <th>Cantidad Actual Anterior</th>
+                <th>Cantidad Mínima Anterior</th>
+                <th>Fecha Cambio</th>
+                <th>Fecha Registro</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="h : ${historial}">
+                <td th:text="${h.cantidadActualAnterior}"></td>
+                <td th:text="${h.cantidadMinimaAnterior}"></td>
+                <td th:text="${h.fechaCambioFormateada}"></td>
+                <td th:text="${h.fechaRegistroFormateada}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(historial)}">
+                <td colspan="4" class="sin-registros">No hay cambios registrados para este inventario</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/admin/inventario/historial}" class="link-volver">⬅️ Volver a Selección</a>
+</div>
+
+<div th:replace="~{admin/fragments :: footer}"></div>
+
+</body>
+</html>

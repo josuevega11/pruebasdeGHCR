@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de Pasteles</title>
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
+    <link rel="stylesheet" th:href="@{/css/catalogo.css}">
+</head>
+<body>
+    <div th:replace="~{usuario/fragments :: navbar}"></div>
+    
+    <div class="catalogo-container">
+        <h1>Catálogo de Pasteles</h1>
+        
+        <ul class="productos-grid">
+            <li th:each="p : ${productos}" class="producto-card">
+                <h3 class="producto-nombre" th:text="${p.nombre}">Nombre</h3>
+                <p class="producto-precio">
+                    <span class="producto-precio-simbolo">S/</span>
+                    <span th:text="${p.precio}">0.00</span>
+                </p>
+                <form th:action="@{/carrito/agregar}" method="post" class="form-agregar">
+                    <input type="hidden" name="productoId" th:value="${p.id}" />
+                    <button type="submit" class="btn-agregar">🛒 Añadir al Carrito</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    
+    <div th:replace="~{usuario/fragments :: footer}"></div>
+</body>
+</html>

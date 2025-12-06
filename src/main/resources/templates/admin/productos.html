@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Productos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FEF5E4;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenido-principal {
+            margin-left: 220px;
+            padding: 30px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+        }
+
+        .contenido-principal h2 {
+            color: #941528;
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .form-producto {
+            background-color: white;
+            border: 2px solid #941528;
+            border-radius: 10px;
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-producto label {
+            display: block;
+            color: #941528;
+            font-weight: 600;
+            margin-bottom: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .form-producto label:first-of-type {
+            margin-top: 0;
+        }
+
+        .form-producto input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-producto input:focus {
+            outline: none;
+            border-color: #941528;
+            box-shadow: 0 0 0 3px rgba(148, 21, 40, 0.1);
+        }
+
+        .form-producto button[type="submit"] {
+            width: 100%;
+            background-color: #941528;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-producto button[type="submit"]:hover {
+            background-color: #b12e40;
+        }
+
+        .tabla-productos {
+            width: 100%;
+            background-color: white;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabla-productos thead {
+            background-color: #D6B7B7;
+            color: #000000;
+        }
+
+        .tabla-productos th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tabla-productos td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .tabla-productos tbody tr:hover {
+            background-color: #ffc3c3;
+        }
+
+        .tabla-productos tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .btn-editar {
+            color: #941528;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-editar:hover {
+            background-color: #941528;
+            color: white;
+        }
+
+        .form-eliminar {
+            display: inline;
+            margin-left: 10px;
+        }
+
+        .btn-eliminar {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-eliminar:hover {
+            background-color: #c82333;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Incluye menú vertical -->
+<div th:replace="~{admin/fragments :: menuVertical}"></div>
+
+<div class="contenido-principal">
+    <h2>Gestión de Productos</h2>
+    
+    <!-- Formulario -->
+    <form th:action="@{/admin/productos}" th:object="${producto}" method="post" class="form-producto">
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" placeholder="Nombre del producto" required />
+        
+        <label>Descripción:</label>
+        <input type="text" th:field="*{descripcion}" placeholder="Descripción" required />
+        
+        <label>Precio:</label>
+        <input type="number" th:field="*{precio}" step="0.01" placeholder="Precio" required />
+        
+        <button type="submit">Guardar Producto</button>
+    </form>
+
+    <!-- Tabla de productos -->
+    <table class="tabla-productos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="prod : ${productos}">
+                <td th:text="${prod.id}"></td>
+                <td th:text="${prod.nombre}"></td>
+                <td th:text="${prod.descripcion}"></td>
+                <td th:text="${prod.precio}"></td>
+                <td>
+                    <a th:href="@{'/admin/productos/editar/' + ${prod.id}}" class="btn-editar">Editar</a>
+                    <form th:action="@{'/admin/productos/eliminar/' + ${prod.id}}" method="post" class="form-eliminar">
+                        <button type="submit" class="btn-eliminar" onclick="return confirm('¿Eliminar este producto?')">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Incluye footer -->
+<div th:replace="~{admin/fragments :: footer}"></div>
+
+</body>
+</html>

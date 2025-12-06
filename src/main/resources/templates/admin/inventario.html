@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FEF5E4;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenido-principal {
+            margin-left: 220px;
+            padding: 30px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+        }
+
+        .contenido-principal h2 {
+            color: #941528;
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .tabla-inventario {
+            width: 100%;
+            background-color: white;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabla-inventario thead {
+            background-color: #D6B7B7;
+            color: #000000;
+        }
+
+        .tabla-inventario th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tabla-inventario td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .tabla-inventario tbody tr:hover {
+            background-color: #ffc3c3;
+        }
+
+        .tabla-inventario tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tabla-inventario input[type="number"] {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .tabla-inventario input[type="number"]:focus {
+            outline: none;
+            border-color: #941528;
+            box-shadow: 0 0 0 3px rgba(148, 21, 40, 0.1);
+        }
+
+        .btn-actualizar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 13px;
+        }
+
+        .btn-actualizar:hover {
+            background-color: #218838;
+        }
+
+        .link-historial {
+            display: inline-block;
+            margin-top: 25px;
+            color: #941528;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 20px;
+            border: 2px solid #941528;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .link-historial:hover {
+            background-color: #941528;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border: 3px solid #941528;
+            width: 50%;
+            border-radius: 10px;
+            position: relative;
+            animation: fadeIn 0.5s;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: white;
+            background-color: #941528;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #b12e40;
+        }
+
+        .modal-titulo {
+            color: #941528;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-content li {
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: #ffe6e6;
+            border-left: 4px solid #941528;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .modal-content li span {
+            font-weight: 600;
+            color: #941528;
+        }
+
+        @keyframes fadeOutGreen {
+            0% {
+                background-color: white;
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                background-color: #d4edda;
+                transform: scale(1.05);
+            }
+            100% {
+                background-color: #d4edda;
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{admin/fragments :: menuVertical}"></div>
+
+<div class="contenido-principal">
+    <h2>Gestión de Inventario</h2>
+
+    <div th:if="${bajoStock != null and #lists.size(bajoStock) > 0}" id="modalAlerta" class="modal">
+        <div class="modal-content" id="modalContent">
+            <button class="close-btn" onclick="cerrarModal()">✕</button>
+            <div class="modal-titulo">⚠️ ¡Alerta de Bajo Stock!</div>
+            <ul>
+                <li th:each="inv : ${bajoStock}">
+                    <span th:text="${inv.producto.nombre}"></span> - 
+                    Quedan <span th:text="${inv.cantidadActual}"></span> unidades 
+                    (mínimo <span th:text="${inv.cantidadMinima}"></span>)
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <form th:action="@{/admin/inventario/actualizar}" method="post">
+        <table class="tabla-inventario">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Producto</th>
+                    <th>Cantidad Actual</th>
+                    <th>Cantidad Mínima</th>
+                    <th>Última Actualización</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="inv : ${inventario}">
+                    <td th:text="${inv.id}"></td>
+                    <td th:text="${inv.producto.nombre}"></td>
+                    <td>
+                        <input type="number" name="cantidadActual" th:value="${inv.cantidadActual}" required/>
+                    </td>
+                    <td>
+                        <input type="number" name="cantidadMinima" th:value="${inv.cantidadMinima}" required/>
+                    </td>
+                    <td th:text="${inv.fechaFormateada}"></td>
+                    <td>
+                        <input type="hidden" name="id" th:value="${inv.id}"/>
+                        <button type="submit" class="btn-actualizar">Actualizar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <a th:href="@{/admin/inventario/historial}" class="link-historial">📋 Ver Historial de Inventarios</a>
+</div>
+
+<div th:replace="~{admin/fragments :: footer}"></div>
+
+<script>
+    window.onload = function() {
+        const modal = document.getElementById("modalAlerta");
+        if (modal) {
+            modal.style.display = "block";
+        }
+    }
+
+    function cerrarModal() {
+        const content = document.getElementById("modalContent");
+        content.style.animation = "fadeOutGreen 1s forwards";
+
+        setTimeout(() => {
+            document.getElementById("modalAlerta").style.display = "none";
+        }, 900);
+    }
+</script>
+
+</body>
+</html>

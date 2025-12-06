@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Fragmento menú vertical admin -->
+<nav th:fragment="menuVertical" style="width: 220px; height: 100vh; background-color: #941528; padding: 30px 20px; position: fixed; top: 0; left: 0; display: flex; flex-direction: column; gap: 10px; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
+    <a th:href="@{/admin/productos}" style="color: white; text-decoration: none; font-size: 16px; font-weight: 600; padding: 12px 15px; border-radius: 8px; transition: all 0.3s ease; background-color: transparent;">Productos</a>
+    <a th:href="@{/admin/usuarios}" style="color: white; text-decoration: none; font-size: 16px; font-weight: 600; padding: 12px 15px; border-radius: 8px; transition: all 0.3s ease; background-color: transparent;">Usuarios</a>
+    <a th:href="@{/admin/pedidos}" style="color: white; text-decoration: none; font-size: 16px; font-weight: 600; padding: 12px 15px; border-radius: 8px; transition: all 0.3s ease; background-color: transparent;">Pedidos Personalizados</a>
+    <a th:href="@{/admin/inventario}" style="color: white; text-decoration: none; font-size: 16px; font-weight: 600; padding: 12px 15px; border-radius: 8px; transition: all 0.3s ease; background-color: transparent;">Inventario</a>
+    <a th:href="@{/admin/inventario/historial}" style="color: white; text-decoration: none; font-size: 16px; font-weight: 600; padding: 12px 15px; border-radius: 8px; transition: all 0.3s ease; background-color: transparent;">Historial de Inventario</a>
+    <a th:href="@{/logout}" style="color: white; text-decoration: none; font-size: 16px; font-weight: 700; padding: 12px 15px; border-radius: 8px; transition: all 0.3s ease; background-color: #D95F66; text-align: center; margin-top: auto;">Cerrar Sesión</a>
+</nav>
+
+<!-- Fragmento footer -->
+<footer th:fragment="footer" style="position: fixed; bottom: 0; left: 220px; right: 0; background-color: #941528; padding: 15px 30px; text-align: center; font-weight: 600; color: white; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); border-top: 3px solid #7a1121; z-index: 999;">
+    Pastelería © 2025 - Herramientas de Desarrollo - Todos los derechos reservados
+</footer>
+
+</body>
+</html>
