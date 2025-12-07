@@ -1,16 +1,15 @@
-name: Build & Push Docker Image to GHCR
+name: Build & Deploy to Render
 
 on:
   push:
     branches: ["master"]
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Login to GHCR
@@ -26,3 +25,7 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/pasteleriaaurora:latest
+
+      - name: Trigger Render Deploy
+        run: |
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
